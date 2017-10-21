@@ -1,0 +1,28 @@
+{
+  "name": "redisqueue/redisqueue",
+  "type": "library",
+  "description": "Redis reliable message queue with subscriber tracker",
+  "keywords": [
+    "redis",
+    "redisqueue",
+    "messagequeue",
+    "reliablequeue"
+  ],
+  "homepage": "https://github.com/Spikes042/redisqueue",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Emmanuel Ogbodo",
+      "email": "ogbodo.emmanuel@spikesinteractive.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-redis": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "RedisQueue\\MessageQueue\\": "lib/RedisQueue/MessageQueue"
+    }
+  }
+}

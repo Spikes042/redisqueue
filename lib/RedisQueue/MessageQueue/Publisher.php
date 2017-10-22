@@ -66,7 +66,7 @@ class Publisher extends MessageQueue{
         $this->pause();
         while($this->getSubscriberSize() > 0){
             //Wait until all subscribers are disconnected
-            sleep(5);
+            sleep($this->subscriber_timeout / 2);
         }
         $result = 0;
 

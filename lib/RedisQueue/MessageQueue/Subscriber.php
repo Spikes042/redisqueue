@@ -12,10 +12,6 @@ use function time;
 class Subscriber extends MessageQueue{
 
     protected $connection_timeout = 5;
-    /**
-     * @var int Theoretically, time allowed to process one message
-     */
-    protected $subscriber_timeout = 60;
 
     public function __construct(Redis $redis){
         parent::__construct($redis);

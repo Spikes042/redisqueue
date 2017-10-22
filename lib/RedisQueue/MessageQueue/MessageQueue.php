@@ -24,6 +24,10 @@ class MessageQueue{
     protected $shutdown_key;
     protected $subscribers;
     protected $process_id;
+    /**
+     * @var int Theoretically, time allowed to process one message
+     */
+    protected $subscriber_timeout = 60;
 
     protected function __construct(Redis $redis){
         $this->namespace = str_ireplace('\\', ':', __NAMESPACE__);

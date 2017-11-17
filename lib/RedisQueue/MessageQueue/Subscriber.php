@@ -1,6 +1,6 @@
 <?php
 
-namespace Queue\MessageQueue;
+namespace RedisQueue\MessageQueue;
 
 use BadMethodCallException;
 use InvalidArgumentException;

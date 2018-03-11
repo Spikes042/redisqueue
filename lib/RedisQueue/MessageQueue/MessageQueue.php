@@ -24,9 +24,6 @@ class MessageQueue{
     protected $shutdown_key;
     protected $subscribers;
     protected $process_id;
-    /**
-     * @var int Theoretically, time allowed to process one message
-     */
     protected $subscriber_timeout = 60;
 
     protected function __construct(Redis $redis){
@@ -41,6 +38,19 @@ class MessageQueue{
      */
     public function getProcessID(): string{
         return $this->process_id;
+    }
+
+    /**
+     * @param int $subscriber_timeout Theoretically, time allowed to process one message
+     *
+     * @throws InvalidArgumentException
+     */
+    public function setSubscriberTimeout(int $subscriber_timeout): void{
+        if($subscriber_timeout < 1){
+            throw new InvalidArgumentException('Timeout cannot be less than 1 second');
+        }
+        
+        $this->subscriber_timeout = $subscriber_timeout;
     }
 
     /**

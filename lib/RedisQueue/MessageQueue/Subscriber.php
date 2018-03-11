@@ -20,13 +20,13 @@ class Subscriber extends MessageQueue{
     }
 
     /**
-     * @param int $connection_timeout
-     *
-     * @throws InvalidArgumentException
+     * @param int $connection_timeout A timeout of zero can be used to wait indefinitely
+     *                                Note that while waiting, the subscriber may time out from the register.
+     *                                You can adjust accordingly by increasing the subscriber_timeout
      */
     public function setConnectionTimeout(int $connection_timeout){
-        if($connection_timeout < 1){
-            throw new InvalidArgumentException('Timeout cannot be less than 1 second');
+        if($connection_timeout < 0){
+            $connection_timeout = 0;
         }
 
         $this->connection_timeout = $connection_timeout;

@@ -12,6 +12,7 @@ use function time;
 class Subscriber extends MessageQueue{
 
     protected $connection_timeout = 5;
+    protected $last_message;
 
     public function __construct(Redis $redis){
         parent::__construct($redis);
@@ -43,7 +44,8 @@ class Subscriber extends MessageQueue{
 
         $this->register();
 
-        return $this->redis->brpoplpush($this->pending_queue, $this->processing_queue, $this->connection_timeout);
+        return $this->last_message = $this->redis->brpoplpush($this->pending_queue, $this->processing_queue,
+                                                              $this->connection_timeout);
     }
 
     private function register(): void{
@@ -51,29 +53,26 @@ class Subscriber extends MessageQueue{
     }
 
     /**
-     * @param $message
-     *
      * @throws BadMethodCallException
+     *
      * @return int
      */
-    public function reQueue($message): int{
-        if($this->ack($message) > 0){
-            return $this->redis->lPush($this->pending_queue, $message);
+    public function reQueue(): int{
+        if($this->ack() > 0){
+            return $this->redis->lPush($this->pending_queue, $this->last_message);
         }
 
         return 0;
     }
 
     /**
-     * @param $message
-     *
      * @throws BadMethodCallException
      *
      * @return int
      */
-    public function ack($message): int{
+    public function ack(): int{
         $this->checkName();
 
-        return $this->redis->lRem($this->processing_queue, $message, -1);
+        return $this->redis->lRem($this->processing_queue, $this->last_message, -1);
     }
 }

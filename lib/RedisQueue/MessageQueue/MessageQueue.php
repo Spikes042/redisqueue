@@ -3,6 +3,7 @@
 namespace RedisQueue\MessageQueue;
 
 use BadMethodCallException;
+use InvalidArgumentException;
 use Redis;
 use UnexpectedValueException;
 use function bin2hex;
@@ -49,7 +50,7 @@ class MessageQueue{
         if($subscriber_timeout < 1){
             throw new InvalidArgumentException('Timeout cannot be less than 1 second');
         }
-        
+
         $this->subscriber_timeout = $subscriber_timeout;
     }
 

@@ -3,7 +3,6 @@
 namespace RedisQueue\MessageQueue;
 
 use BadMethodCallException;
-use InvalidArgumentException;
 use Redis;
 use function ini_set;
 use function time;

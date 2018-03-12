@@ -15,13 +15,13 @@ class Subscriber extends MessageQueue{
 
     public function __construct(Redis $redis){
         parent::__construct($redis);
-        ini_set('default_socket_timeout', -1);
     }
 
     /**
      * @param int $connection_timeout A timeout of zero can be used to wait indefinitely
      *                                Note that while waiting, the subscriber may time out from the register.
      *                                You can adjust accordingly by increasing the subscriber_timeout
+     *                                Also, remember to set default_socket_timeout = -1 before connecting to redis
      */
     public function setConnectionTimeout(int $connection_timeout){
         if($connection_timeout < 0){

@@ -12,10 +12,6 @@ class Publisher extends MessageQueue{
 
     protected $batch_size = 5000;
 
-    public function __construct(Redis $redis){
-        parent::__construct($redis);
-    }
-
     /**
      * @param array $messages
      *

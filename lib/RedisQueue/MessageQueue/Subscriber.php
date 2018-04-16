@@ -3,8 +3,6 @@
 namespace RedisQueue\MessageQueue;
 
 use BadMethodCallException;
-use Redis;
-use function ini_set;
 use function time;
 
 
@@ -12,10 +10,6 @@ class Subscriber extends MessageQueue{
 
     protected $connection_timeout = 5;
     protected $last_message;
-
-    public function __construct(Redis $redis){
-        parent::__construct($redis);
-    }
 
     /**
      * @param int $connection_timeout A timeout of zero can be used to wait indefinitely
@@ -34,7 +28,7 @@ class Subscriber extends MessageQueue{
     /**
      * @throws BadMethodCallException
      *
-     * @return false|string
+     * @return false|mixed
      */
     public function sub(){
         if($this->paused()){

@@ -7,12 +7,12 @@ use InvalidArgumentException;
 use Redis;
 use UnexpectedValueException;
 use function bin2hex;
-use function openssl_random_pseudo_bytes;
+use function random_bytes;
 use function str_ireplace;
 use function time;
 use function trim;
 
-class MessageQueue{
+abstract class MessageQueue{
 
     /**
      * @var Redis
@@ -27,11 +27,18 @@ class MessageQueue{
     protected $process_id;
     protected $subscriber_timeout = 60;
 
-    protected function __construct(Redis $redis){
+    /**
+     * MessageQueue constructor.
+     *
+     * @param Redis $redis
+     *
+     * @throws \Exception
+     */
+    public function __construct(Redis $redis){
         $this->namespace = str_ireplace('\\', ':', __NAMESPACE__);
         $this->redis = $redis;
 
-        $this->process_id = bin2hex(openssl_random_pseudo_bytes(5));
+        $this->process_id = bin2hex(random_bytes(5));
     }
 
     /**
